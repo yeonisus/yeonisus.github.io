@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ye Eun Kim — Human-Centered Apparel Engineering</title>
+<meta name="description" content="Ye Eun Kim is a Ph.D. student in Apparel Design and Production at Seoul National University, translating body data into sizing, fit, and ergonomic design systems.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340;9..144,400;9..144,500&family=Instrument+Sans:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:      #FAF7F1;
+    --ivory-deep: #F3EFE6;
+    --charcoal:   #2C2B30;
+    --ink-soft:   #6C6A72;
+    --lavender:   #7F7AA8;
+    --lavender-2: #EDEBF4;
+    --line:       #E4DFD3;
+    --radius: 14px;
+    --max: 1120px;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *, *::before, *::after{ animation:none !important; transition:none !important; }
+  }
+  body{
+    background:var(--ivory);
+    color:var(--charcoal);
+    font-family:'Instrument Sans', sans-serif;
+    font-size:17px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--lavender-2); color:var(--charcoal); }
+  a{ color:inherit; }
+
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 32px; }
+  .mono{ font-family:'Spline Sans Mono', monospace; }
+
+  /* ---------- Nav ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(250,247,241,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:var(--max); margin:0 auto; padding:18px 32px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+  }
+  .nav-name{
+    font-family:'Fraunces', serif; font-weight:500; font-size:19px;
+    text-decoration:none; letter-spacing:.01em;
+  }
+  .nav-name span{ color:var(--lavender); }
+  .nav-links{ display:flex; gap:26px; list-style:none; }
+  .nav-links a{
+    text-decoration:none; font-size:14px; font-weight:500; color:var(--ink-soft);
+    transition:color .2s;
+  }
+  .nav-links a:hover, .nav-links a:focus-visible{ color:var(--charcoal); }
+  a:focus-visible{ outline:2px solid var(--lavender); outline-offset:3px; border-radius:3px; }
+  @media (max-width:820px){
+    .nav-inner{
+      flex-direction:column; align-items:flex-start;
+      gap:10px; padding:14px 32px 12px;
+    }
+    .nav-links{
+      width:100%;
+      gap:22px;
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:none;          /* Firefox */
+      white-space:nowrap;
+      padding-bottom:2px;
+    }
+    .nav-links::-webkit-scrollbar{ display:none; }  /* Chrome/Safari */
+    .nav-links a{ font-size:13px; }
+  }
+
+  /* ---------- Section scaffolding ---------- */
+  section{ padding:110px 0; }
+  section + section{ border-top:1px solid var(--line); }
+  .eyebrow{
+    font-family:'Spline Sans Mono', monospace;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--lavender); margin-bottom:22px; display:block;
+  }
+  h2{
+    font-family:'Fraunces', serif; font-weight:400;
+    font-size:clamp(30px, 4vw, 42px); line-height:1.18;
+    letter-spacing:-.01em; margin-bottom:20px; max-width:640px;
+  }
+  .lede{ color:var(--ink-soft); max-width:600px; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:190px 0 120px;
+    display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,.9fr);
+    gap:72px; align-items:center;
+    border-top:none;
+  }
+  .hero h1{
+    font-family:'Fraunces', serif; font-weight:340;
+    font-size:clamp(38px, 5.6vw, 64px);
+    line-height:1.12; letter-spacing:-.015em;
+    margin:26px 0 28px;
+  }
+  .hero h1 em{
+    font-style:italic; font-weight:400; color:var(--lavender);
+  }
+  .hero .intro{ color:var(--ink-soft); max-width:520px; margin-bottom:34px; }
+  .tags{ display:flex; flex-wrap:wrap; gap:10px; list-style:none; }
+  .tags li{
+    font-family:'Spline Sans Mono', monospace; font-size:12.5px;
+    color:var(--ink-soft);
+    border:1px solid var(--line); background:#fff;
+    padding:7px 13px; border-radius:100px;
+  }
+
+  /* ---------- Portrait card with landmark motif ---------- */
+  .portrait-zone{ position:relative; }
+  .portrait-card{
+    position:relative;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:14px 14px 16px;
+  }
+  .portrait-frame{
+    border-radius:calc(var(--radius) - 6px);
+    overflow:hidden;
+    background:var(--lavender-2);
+    aspect-ratio:4/5;
+    display:flex; align-items:center; justify-content:center;
+  }
+  /* Portrait photo lives at ./portrait-yeeun.jpeg — keep it next to this HTML file */
+  .portrait-caption{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:12px 4px 0;
+    font-family:'Spline Sans Mono', monospace; font-size:11.5px;
+    color:var(--ink-soft); letter-spacing:.06em;
+  }
+  /* landmark annotations floating around the card */
+  .landmark{
+    position:absolute;
+    display:flex; align-items:center; gap:8px;
+    font-family:'Spline Sans Mono', monospace; font-size:11px;
+    color:var(--lavender); letter-spacing:.05em;
+    pointer-events:none; white-space:nowrap;
+  }
+  .landmark::before{
+    content:""; width:9px; height:9px; flex:none;
+    border:1.5px solid var(--lavender); border-radius:50%;
+    background:var(--ivory);
+  }
+  /* Annotations sit fully outside the card edges — never over the face */
+  .lm-1{ top:16%; left:-56px; }
+  .lm-2{ top:42%; right:-104px; }
+  .lm-3{ bottom:24%; left:-118px; flex-direction:row-reverse; }
+  .lm-4{ bottom:6%; right:-70px; }
+  @media (max-width:1220px){ .lm-1,.lm-2,.lm-3,.lm-4{ display:none; } }
+
+  @media (max-width:900px){
+    .hero{ grid-template-columns:1fr; padding-top:150px; gap:56px; }
+    .portrait-zone{ max-width:380px; }
+  }
+
+  /* ---------- Selected Work ---------- */
+  .work-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:56px;
+  }
+  @media (max-width:860px){ .work-grid{ grid-template-columns:1fr; } }
+  .project{
+    background:#fff; border:1px solid var(--line);
+    border-radius:var(--radius); padding:36px 34px 32px;
+    display:flex; flex-direction:column; gap:22px;
+    transition:border-color .25s;
+  }
+  .project:hover{ border-color:var(--lavender); }
+  .project-head{ display:flex; flex-direction:column; gap:12px; }
+  .project-domain{
+    font-family:'Spline Sans Mono', monospace; font-size:11.5px;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--lavender);
+  }
+  .project h3{
+    font-family:'Fraunces', serif; font-weight:400;
+    font-size:23px; line-height:1.3; letter-spacing:-.005em;
+  }
+  .facets{ display:flex; flex-direction:column; gap:15px; border-top:1px solid var(--line); padding-top:22px; }
+  .facet{ display:grid; grid-template-columns:92px 1fr; gap:14px; }
+  .facet dt{
+    font-family:'Spline Sans Mono', monospace; font-size:11px;
+    letter-spacing:.1em; text-transform:uppercase;
+    color:var(--ink-soft); padding-top:3px;
+  }
+  .facet dd{ font-size:15px; line-height:1.6; color:var(--charcoal); }
+  @media (max-width:480px){ .facet{ grid-template-columns:1fr; gap:4px; } }
+
+  /* ---------- Research Focus ---------- */
+  .focus-grid{
+    display:grid; grid-template-columns:1.1fr .9fr; gap:72px; margin-top:14px;
+  }
+  @media (max-width:820px){ .focus-grid{ grid-template-columns:1fr; gap:44px; } }
+  .focus-grid p + p{ margin-top:18px; }
+  .focus-grid p{ color:var(--ink-soft); }
+  .focus-grid p strong{ color:var(--charcoal); font-weight:600; }
+  .kw-list{ list-style:none; display:flex; flex-direction:column; }
+  .kw-list li{
+    display:flex; align-items:baseline; justify-content:space-between; gap:16px;
+    padding:15px 2px; border-bottom:1px solid var(--line);
+    font-family:'Fraunces', serif; font-size:20px; font-weight:400;
+  }
+  .kw-list li:first-child{ border-top:1px solid var(--line); }
+  .kw-list li span{
+    font-family:'Spline Sans Mono', monospace; font-size:11px;
+    color:var(--lavender); letter-spacing:.08em;
+  }
+
+  /* ---------- Publications ---------- */
+  .pub-list{ list-style:none; margin-top:48px; }
+  .pub-list li{
+    display:grid; grid-template-columns:120px 1fr; gap:28px;
+    padding:26px 0; border-bottom:1px solid var(--line);
+  }
+  .pub-list li:first-child{ border-top:1px solid var(--line); }
+  .pub-type{
+    font-family:'Spline Sans Mono', monospace; font-size:11.5px;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--lavender);
+    padding-top:4px;
+  }
+  .pub-title{ font-family:'Fraunces', serif; font-size:20px; font-weight:400; line-height:1.4; }
+  .pub-meta{ font-size:14px; color:var(--ink-soft); margin-top:6px; }
+  .pub-note{ font-size:14px; color:var(--ink-soft); margin-top:28px; }
+  @media (max-width:560px){ .pub-list li{ grid-template-columns:1fr; gap:8px; } }
+
+  /* ---------- About ---------- */
+  .about-grid{ display:grid; grid-template-columns:1.15fr .85fr; gap:72px; }
+  @media (max-width:820px){ .about-grid{ grid-template-columns:1fr; gap:44px; } }
+  .about-grid p{ color:var(--ink-soft); }
+  .about-grid p + p{ margin-top:18px; }
+  .about-facts{ list-style:none; }
+  .about-facts li{
+    padding:16px 2px; border-bottom:1px solid var(--line);
+    display:flex; flex-direction:column; gap:3px;
+  }
+  .about-facts li:first-child{ border-top:1px solid var(--line); }
+  .about-facts .k{
+    font-family:'Spline Sans Mono', monospace; font-size:11px;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft);
+  }
+  .about-facts .v{ font-size:16px; }
+
+  /* ---------- Contact ---------- */
+  .contact{
+    background:var(--ivory-deep);
+    border-radius:calc(var(--radius) + 6px);
+    padding:96px 72px;
+    margin:56px 0 0;
+    border-top:none; /* no hairline across the rounded card */
+  }
+  .contact h2{
+    max-width:760px;
+    margin-bottom:26px;
+  }
+  .contact-mail{
+    display:inline-block;
+    margin-top:20px;
+    font-family:'Fraunces', serif;
+    font-size:clamp(24px, 3vw, 32px);
+    text-decoration:none;
+    color:var(--charcoal);
+    border-bottom:2px solid var(--lavender);
+    padding-bottom:5px;
+    transition:color .2s;
+  }
+  .contact-mail:hover{ color:var(--lavender); }
+  .contact-sub{
+    margin-top:34px;
+    font-size:14.5px;
+    color:var(--ink-soft);
+  }
+  @media (max-width:700px){
+    .contact{
+      padding:72px 28px;
+      margin-top:32px;
+    }
+  }
+
+  footer{
+    padding:34px 0;
+    font-family:'Spline Sans Mono', monospace; font-size:12px;
+    color:var(--ink-soft);
+    display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap;
+  }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{ opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){ .reveal{ opacity:1; transform:none; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-name" href="#home">Ye Eun Kim<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#work">Selected Work</a></li>
+      <li><a href="#focus">Research Focus</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="home">
+    <div>
+      <span class="eyebrow">Ph.D. Student · Apparel Design &amp; Production · Seoul National University</span>
+      <h1>Human-centered apparel engineering through <em>body data</em>, fit, and ergonomics.</h1>
+      <p class="intro">I translate anthropometric data, 3D body scans, and ergonomic evaluation into practical sizing and fit solutions for functional and protective clothing.</p>
+      <ul class="tags">
+        <li>3D Anthropometry</li>
+        <li>Protective Clothing</li>
+        <li>Military Uniforms</li>
+        <li>Sizing Systems</li>
+        <li>Fit Evaluation</li>
+        <li>Applied Ergonomics</li>
+      </ul>
+    </div>
+
+    <div class="portrait-zone reveal">
+      <span class="landmark lm-1">C7 · cervicale</span>
+      <span class="landmark lm-2">acromion</span>
+      <span class="landmark lm-3">greater trochanter</span>
+      <span class="landmark lm-4">lateral malleolus</span>
+      <div class="portrait-card">
+        <div class="portrait-frame">
+          <!-- Portrait photo: keep portrait-yeeun.jpeg in the same folder as this HTML file -->
+          <img src="portrait-yeeun.jpeg" alt="Portrait of Ye Eun Kim" style="width:100%;height:100%;object-fit:cover;object-position:center 45%;">
+        </div>
+        <div class="portrait-caption">
+          <span>KIM, YE EUN</span>
+          <span>SEOUL · KR</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SELECTED WORK ============ -->
+  <section id="work">
+    <span class="eyebrow">Selected Work</span>
+    <h2>From measurement to design decision.</h2>
+    <p class="lede">Four projects that follow the same arc: capture the body accurately, model it honestly, and turn the result into something a designer or an institution can actually use.</p>
+
+    <div class="work-grid">
+
+      <article class="project reveal">
+        <div class="project-head">
+          <span class="project-domain">3D Scanning · Landmarking</span>
+          <h3>Adaptive Landmark Adjustment for 3D Anthropometric Scanning</h3>
+        </div>
+        <dl class="facets">
+          <div class="facet"><dt>Problem</dt><dd>Automated landmark detection in 3D body scanning can be less reliable for muscular or non-average body shapes, which affects the accuracy of scan-derived anthropometric measurements.</dd></div>
+          <div class="facet"><dt>Approach</dt><dd>Developed an adaptive landmark adjustment approach using local body geometry and anthropometric logic to refine landmark positions.</dd></div>
+          <div class="facet"><dt>Outcome</dt><dd>Improved consistency of landmark placement and supported more reliable body measurement extraction.</dd></div>
+          <div class="facet"><dt>Relevance</dt><dd>Reliable landmarking is essential for 3D anthropometry, sizing systems, and scan-based apparel design.</dd></div>
+        </dl>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-head">
+          <span class="project-domain">Sizing Algorithm · Military Apparel</span>
+          <h3>Body Type–Based Size Recommendation Algorithm for Special Forces Uniforms</h3>
+        </div>
+        <dl class="facets">
+          <div class="facet"><dt>Problem</dt><dd>Current military uniform allocation systems rely mainly on height, chest, and waist measurements, which may not fully capture body-type variation among special forces soldiers.</dd></div>
+          <div class="facet"><dt>Approach</dt><dd>Classified body types using anthropometric and fit-related data, then developed a size recommendation logic that combines key body dimensions, part-specific fit thresholds, and expert-driven decision criteria.</dd></div>
+          <div class="facet"><dt>Outcome</dt><dd>A body type–based size recommendation framework for upper- and lower-body military uniform allocation, currently the subject of a Korean patent application.</dd></div>
+          <div class="facet"><dt>Relevance</dt><dd>Shows how body data can be translated into a decision-support framework for institutional clothing, not just a research finding.</dd></div>
+        </dl>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-head">
+          <span class="project-domain">Sizing System · Protective Equipment</span>
+          <h3>Anthropometric Sizing System for Buoyancy Bulletproof Vests</h3>
+        </div>
+        <dl class="facets">
+          <div class="facet"><dt>Problem</dt><dd>Dedicated anthropometric sizing criteria for buoyancy bulletproof vests remain limited, despite the combined demands of protection, buoyancy, and mobility.</dd></div>
+          <div class="facet"><dt>Approach</dt><dd>Analyzed torso length and chest and waist circumferences from the 8th Korean Human Body Measurement Survey, examining size distributions with regression, bootstrap confidence intervals, and chi-square testing.</dd></div>
+          <div class="facet"><dt>Outcome</dt><dd>A proposed sizing framework for a mixed male–female user population, supported by anthropometric distribution analysis.</dd></div>
+          <div class="facet"><dt>Relevance</dt><dd>A practical path from national survey data to protective-equipment sizing criteria.</dd></div>
+        </dl>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-head">
+          <span class="project-domain">Posture Analysis · Ergonomics</span>
+          <h3>Sagittal Posture Profiling for Ergonomic Apparel Design</h3>
+        </div>
+        <dl class="facets">
+          <div class="facet"><dt>Problem</dt><dd>Load-bearing conditions can alter sagittal alignment, yet posture-related fit issues are rarely reflected in how garments and gear are designed.</dd></div>
+          <div class="facet"><dt>Approach</dt><dd>Extracted 2D sagittal landmarks from images of special forces soldiers to characterize posture profiles under load-bearing conditions.</dd></div>
+          <div class="facet"><dt>Outcome</dt><dd>Posture profiles that support ergonomic interpretation of garment ease, articulation, and gear compatibility under load-bearing conditions.</dd></div>
+          <div class="facet"><dt>Relevance</dt><dd>Links observed sagittal alignment to ergonomic considerations in apparel and tactical gear design.</dd></div>
+        </dl>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ RESEARCH FOCUS ============ -->
+  <section id="focus">
+    <span class="eyebrow">Research Focus</span>
+    <h2>The body is the specification.</h2>
+    <div class="focus-grid">
+      <div class="reveal">
+        <p>My research sits between <strong>human body data and apparel engineering</strong>. Clothing for demanding contexts — military, protective, functional — fails quietly when it fits the average and no one else. I work on the methods that prevent that: better landmarking of 3D scans, sizing systems grounded in national anthropometric surveys, and posture analysis that reflects how bodies actually carry load.</p>
+        <p>The through-line is <strong>translation</strong>. A scan, a survey, or a posture profile is only useful once it becomes a size chart, a recommendation rule, or a pattern adjustment that a designer or an institution can act on. That last step — from data to design decision — is where my work lives.</p>
+      </div>
+      <ul class="kw-list reveal">
+        <li>3D Anthropometry <span>method</span></li>
+        <li>Protective Clothing <span>domain</span></li>
+        <li>Military Uniforms <span>domain</span></li>
+        <li>Sizing Systems <span>output</span></li>
+        <li>Fit Evaluation <span>method</span></li>
+        <li>Applied Ergonomics <span>lens</span></li>
+        <li>Data-Driven Apparel Design <span>approach</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ PUBLICATIONS ============ -->
+  <section id="publications">
+    <span class="eyebrow">Publications &amp; Research Output</span>
+    <h2>Published and ongoing work.</h2>
+    <ul class="pub-list">
+      <li class="reveal">
+        <span class="pub-type">Published Article</span>
+        <div>
+          <p class="pub-title">Review of Data and User Interface in Online Apparel Size Recommendation Systems</p>
+          <p class="pub-meta">Kim, Y. E., &amp; Choi, H. E. (2025). <em>Journal of the Korean Society of Clothing and Textiles</em>, 49(2), 267–283. <a href="https://doi.org/10.5850/JKSCT.2025.49.2.267">DOI</a></p>
+        </div>
+      </li>
+      <li class="reveal">
+        <span class="pub-type">Manuscript</span>
+        <div>
+          <p class="pub-title">Adaptive Landmark Adjustment Approaches for 3D Anthropometric Scanning of Muscular Male Bodies</p>
+          <p class="pub-meta">Measurement Science and Technology · Under revision</p>
+        </div>
+      </li>
+      <li class="reveal">
+        <span class="pub-type">Patent (KR)</span>
+        <div>
+          <p class="pub-title">Body type–based size recommendation system for military uniforms</p>
+          <p class="pub-meta">Korean patent application · filed 2026</p>
+        </div>
+      </li>
+      <li class="reveal">
+        <span class="pub-type">Manuscript</span>
+        <div>
+          <p class="pub-title">Sagittal posture profiling of special forces soldiers under tactical load</p>
+          <p class="pub-meta">In preparation</p>
+        </div>
+      </li>
+      <li class="reveal">
+        <span class="pub-type">Manuscript</span>
+        <div>
+          <p class="pub-title">An anthropometric sizing system for buoyancy bulletproof vests based on the 8th Korean Human Body Measurement Survey</p>
+          <p class="pub-meta">In preparation</p>
+        </div>
+      </li>
+    </ul>
+    <p class="pub-note">A full CV, including co-authored publications, presentations, and coursework projects, is available on request.</p>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about">
+    <span class="eyebrow">About</span>
+    <h2>Researcher first, designer always.</h2>
+    <div class="about-grid">
+      <div class="reveal">
+        <p>I am a Ph.D. student in Apparel Design and Production in the Department of Clothing and Textiles at Seoul National University. My background combines apparel design with quantitative methods — statistics, 3D scan processing, and computer-vision-based posture analysis — which lets me move between the fitting room and the dataset without losing either.</p>
+        <p>Most of my work concerns clothing where fit is not a preference but a performance requirement: uniforms, body armor, and protective equipment. I collaborate across apparel design, ergonomics, engineering, and industry-oriented research projects, with an emphasis on whether a sizing system can actually be adopted in practice.</p>
+        <p>I am also interested in how emerging tools — 3D simulation, pose estimation, and AI-assisted workflows — can expand what apparel research is able to measure, model, and translate into design.</p>
+      </div>
+      <ul class="about-facts reveal">
+        <li><span class="k">Position</span><span class="v">Ph.D. Student, Apparel Design &amp; Production</span></li>
+        <li><span class="k">Affiliation</span><span class="v">Dept. of Clothing &amp; Textiles, Seoul National University</span></li>
+        <li><span class="k">Based in</span><span class="v">Seoul, Republic of Korea</span></li>
+        <li><span class="k">Methods</span><span class="v">3D scan processing · statistical sizing analysis · 2D pose landmarking · fit evaluation</span></li>
+        <li><span class="k">Tools</span><span class="v">R · Python · CLO3D · Blender</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="contact" id="contact">
+    <span class="eyebrow">Contact</span>
+    <h2>For research collaboration and projects related to sizing, fit, and functional apparel design.</h2>
+    <a class="contact-mail" href="mailto:yen4428@snu.ac.kr">yen4428@snu.ac.kr</a>
+    <p class="contact-sub">Seoul National University · Department of Clothing and Textiles · Seoul, Republic of Korea</p>
+  </section>
+
+  <footer>
+    <span>© 2026 Ye Eun Kim</span>
+    <span>Human-centered apparel engineering</span>
+  </footer>
+
+</main>
+
+<script>
+  // Gentle scroll-in reveal (respects reduced motion via CSS)
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{ threshold:.12 });
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
