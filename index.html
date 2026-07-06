@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ye Eun Kim — Human-Centered Apparel Engineering</title>
 <meta name="description" content="Ye Eun Kim is a Ph.D. student in Apparel Design and Production at Seoul National University, translating body data into sizing, fit, and ergonomic design systems.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ye Eun Kim — Human-Centered Apparel Engineering">
+<meta property="og:description" content="Translating anthropometric data, 3D body scans, and ergonomic evaluation into sizing and fit solutions for functional and protective clothing.">
+<!-- No og:image on purpose: link previews stay text-led, not portrait-led -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340;9..144,400;9..144,500&family=Instrument+Sans:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -65,20 +69,25 @@
   a:focus-visible{ outline:2px solid var(--lavender); outline-offset:3px; border-radius:3px; }
   @media (max-width:820px){
     .nav-inner{
-      flex-direction:column; align-items:flex-start;
-      gap:10px; padding:14px 32px 12px;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:16px;
+      padding:20px 32px 14px;
     }
     .nav-links{
+      display:flex;
       width:100%;
-      gap:22px;
       overflow-x:auto;
+      gap:28px;
+      padding-bottom:8px;
       -webkit-overflow-scrolling:touch;
       scrollbar-width:none;          /* Firefox */
-      white-space:nowrap;
-      padding-bottom:2px;
     }
     .nav-links::-webkit-scrollbar{ display:none; }  /* Chrome/Safari */
-    .nav-links a{ font-size:13px; }
+    .nav-links a{
+      white-space:nowrap;
+      font-size:14px;
+    }
   }
 
   /* ---------- Section scaffolding ---------- */
@@ -121,52 +130,72 @@
     padding:7px 13px; border-radius:100px;
   }
 
-  /* ---------- Portrait card with landmark motif ---------- */
-  .portrait-zone{ position:relative; }
-  .portrait-card{
-    position:relative;
+  /* ---------- Hero figure card: abstract sagittal landmark diagram ---------- */
+  .figure-zone{ position:relative; }
+  .figure-card{
     background:#fff;
     border:1px solid var(--line);
     border-radius:var(--radius);
     padding:14px 14px 16px;
   }
-  .portrait-frame{
+  .figure-frame{
     border-radius:calc(var(--radius) - 6px);
     overflow:hidden;
-    background:var(--lavender-2);
+    background:#FCFBF8;
     aspect-ratio:4/5;
-    display:flex; align-items:center; justify-content:center;
   }
-  /* Portrait photo lives at ./portrait-yeeun.jpeg — keep it next to this HTML file */
-  .portrait-caption{
+  .figure-frame svg{ display:block; width:100%; height:100%; }
+  .figure-caption{
     display:flex; justify-content:space-between; align-items:baseline;
     padding:12px 4px 0;
     font-family:'Spline Sans Mono', monospace; font-size:11.5px;
     color:var(--ink-soft); letter-spacing:.06em;
   }
-  /* landmark annotations floating around the card */
-  .landmark{
-    position:absolute;
-    display:flex; align-items:center; gap:8px;
-    font-family:'Spline Sans Mono', monospace; font-size:11px;
-    color:var(--lavender); letter-spacing:.05em;
-    pointer-events:none; white-space:nowrap;
+
+  /* ---------- About portrait (modest, secondary) ---------- */
+  /* Portrait photo lives at ./portrait-yeeun.jpeg — keep it next to this HTML file */
+  .about-portrait{
+    max-width:230px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:10px 10px 12px;
+    margin-bottom:30px;
   }
-  .landmark::before{
-    content:""; width:9px; height:9px; flex:none;
-    border:1.5px solid var(--lavender); border-radius:50%;
-    background:var(--ivory);
+  .about-portrait .frame{
+    border-radius:calc(var(--radius) - 6px);
+    overflow:hidden;
+    background:var(--lavender-2);
+    aspect-ratio:4/5;
   }
-  /* Annotations sit fully outside the card edges — never over the face */
-  .lm-1{ top:16%; left:-56px; }
-  .lm-2{ top:42%; right:-104px; }
-  .lm-3{ bottom:24%; left:-118px; flex-direction:row-reverse; }
-  .lm-4{ bottom:6%; right:-70px; }
-  @media (max-width:1220px){ .lm-1,.lm-2,.lm-3,.lm-4{ display:none; } }
+  .about-portrait img{ width:100%; height:100%; object-fit:cover; object-position:center 45%; display:block; }
+  .about-portrait figcaption{
+    padding:10px 3px 0;
+    font-family:'Spline Sans Mono', monospace; font-size:10.5px;
+    color:var(--ink-soft); letter-spacing:.08em;
+    display:flex; justify-content:space-between;
+  }
 
   @media (max-width:900px){
     .hero{ grid-template-columns:1fr; padding-top:150px; gap:56px; }
-    .portrait-zone{ max-width:380px; }
+    .figure-zone{ max-width:380px; }
+  }
+
+  /* ---------- Mobile hero spacing ---------- */
+  @media (max-width:700px){
+    .hero{
+      padding-top:170px;
+      padding-bottom:80px;
+      gap:44px;
+    }
+    .hero h1{
+      font-size:clamp(42px, 12vw, 56px);
+      line-height:1.12;
+      margin:22px 0 24px;
+    }
+    .hero .intro{ margin-bottom:28px; }
+    .tags{ gap:9px; }
+    .tags li{ font-size:12px; padding:7px 12px; }
   }
 
   /* ---------- Selected Work ---------- */
@@ -285,8 +314,21 @@
   }
   @media (max-width:700px){
     .contact{
-      padding:72px 28px;
+      padding:64px 28px;
       margin-top:32px;
+    }
+    .contact h2{
+      font-size:clamp(34px, 10vw, 46px);
+      line-height:1.18;
+      margin-bottom:22px;
+    }
+    .contact-mail{
+      font-size:clamp(28px, 8vw, 36px);
+      word-break:break-word;
+    }
+    .contact-sub{
+      font-size:15px;
+      line-height:1.7;
     }
   }
 
@@ -337,19 +379,68 @@
       </ul>
     </div>
 
-    <div class="portrait-zone reveal">
-      <span class="landmark lm-1">C7 · cervicale</span>
-      <span class="landmark lm-2">acromion</span>
-      <span class="landmark lm-3">greater trochanter</span>
-      <span class="landmark lm-4">lateral malleolus</span>
-      <div class="portrait-card">
-        <div class="portrait-frame">
-          <!-- Portrait photo: keep portrait-yeeun.jpeg in the same folder as this HTML file -->
-          <img src="portrait-yeeun.jpeg" alt="Portrait of Ye Eun Kim" style="width:100%;height:100%;object-fit:cover;object-position:center 45%;">
+    <div class="figure-zone reveal">
+      <div class="figure-card">
+        <div class="figure-frame">
+          <svg viewBox="0 0 340 425" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Abstract sagittal landmark diagram with four anthropometric landmarks: cervicale, acromion, greater trochanter, and lateral malleolus">
+            <!-- measurement level lines -->
+            <g stroke="#E4DFD3" stroke-width="1" stroke-dasharray="1 5">
+              <line x1="46" y1="108" x2="300" y2="108"/>
+              <line x1="46" y1="126" x2="300" y2="126"/>
+              <line x1="46" y1="254" x2="300" y2="254"/>
+              <line x1="46" y1="392" x2="300" y2="392"/>
+            </g>
+            <!-- left measurement ruler -->
+            <g stroke="#D8D2C4" stroke-width="1">
+              <line x1="34" y1="42" x2="34" y2="404"/>
+              <line x1="34" y1="42" x2="41" y2="42"/>
+              <line x1="34" y1="108" x2="41" y2="108"/>
+              <line x1="34" y1="176" x2="41" y2="176"/>
+              <line x1="34" y1="254" x2="41" y2="254"/>
+              <line x1="34" y1="322" x2="41" y2="322"/>
+              <line x1="34" y1="392" x2="41" y2="392"/>
+            </g>
+            <!-- vertical plumb line -->
+            <line x1="168" y1="30" x2="168" y2="410" stroke="#7F7AA8" stroke-width="1" stroke-dasharray="2 6" opacity=".45"/>
+            <!-- head -->
+            <circle cx="192" cy="60" r="26" fill="#EDEBF4"/>
+            <!-- sagittal segment lines (pose-estimation style) -->
+            <g stroke="#7F7AA8" stroke-width="1.6" fill="none" stroke-linecap="round">
+              <line x1="192" y1="62" x2="176" y2="108"/>   <!-- head → C7 -->
+              <line x1="176" y1="108" x2="171" y2="254"/>  <!-- trunk: C7 → trochanter -->
+              <line x1="171" y1="254" x2="183" y2="322"/>  <!-- thigh -->
+              <line x1="183" y1="322" x2="169" y2="392"/>  <!-- shank -->
+            </g>
+            <!-- acromion offset connector -->
+            <line x1="176" y1="112" x2="191" y2="126" stroke="#7F7AA8" stroke-width="1" opacity=".55"/>
+            <!-- trunk inclination arc at trochanter -->
+            <path d="M 171 224 A 30 30 0 0 1 176 225" stroke="#7F7AA8" stroke-width="1" fill="none" opacity=".7"/>
+            <text x="181" y="221" font-family="Spline Sans Mono, monospace" font-size="10" fill="#7F7AA8">θ</text>
+            <!-- landmark points -->
+            <g fill="#FCFBF8" stroke="#7F7AA8" stroke-width="1.6">
+              <circle cx="176" cy="108" r="5"/>
+              <circle cx="191" cy="126" r="5"/>
+              <circle cx="171" cy="254" r="5"/>
+              <circle cx="169" cy="392" r="5"/>
+            </g>
+            <!-- leader lines + labels -->
+            <g stroke="#7F7AA8" stroke-width="1" opacity=".5">
+              <line x1="182" y1="108" x2="238" y2="108"/>
+              <line x1="197" y1="126" x2="238" y2="126"/>
+              <line x1="177" y1="254" x2="218" y2="254"/>
+              <line x1="175" y1="392" x2="216" y2="392"/>
+            </g>
+            <g font-family="Spline Sans Mono, monospace" font-size="10.5" fill="#6C6A72" letter-spacing=".05em">
+              <text x="243" y="111">C7 · cervicale</text>
+              <text x="243" y="129">acromion</text>
+              <text x="223" y="257">greater trochanter</text>
+              <text x="221" y="395">lateral malleolus</text>
+            </g>
+          </svg>
         </div>
-        <div class="portrait-caption">
-          <span>KIM, YE EUN</span>
-          <span>SEOUL · KR</span>
+        <div class="figure-caption">
+          <span>FIG. 01 — SAGITTAL LANDMARK SET</span>
+          <span>2D POSTURE ANALYSIS</span>
         </div>
       </div>
     </div>
@@ -493,13 +584,25 @@
         <p>Most of my work concerns clothing where fit is not a preference but a performance requirement: uniforms, body armor, and protective equipment. I collaborate across apparel design, ergonomics, engineering, and industry-oriented research projects, with an emphasis on whether a sizing system can actually be adopted in practice.</p>
         <p>I am also interested in how emerging tools — 3D simulation, pose estimation, and AI-assisted workflows — can expand what apparel research is able to measure, model, and translate into design.</p>
       </div>
-      <ul class="about-facts reveal">
+      <div class="reveal">
+        <figure class="about-portrait">
+          <div class="frame">
+            <!-- Portrait photo: keep portrait-yeeun.jpeg in the same folder as this HTML file -->
+            <img src="portrait-yeeun.jpeg" alt="Portrait of Ye Eun Kim">
+          </div>
+          <figcaption>
+            <span>KIM, YE EUN</span>
+            <span>SEOUL · KR</span>
+          </figcaption>
+        </figure>
+        <ul class="about-facts">
         <li><span class="k">Position</span><span class="v">Ph.D. Student, Apparel Design &amp; Production</span></li>
         <li><span class="k">Affiliation</span><span class="v">Dept. of Clothing &amp; Textiles, Seoul National University</span></li>
         <li><span class="k">Based in</span><span class="v">Seoul, Republic of Korea</span></li>
         <li><span class="k">Methods</span><span class="v">3D scan processing · statistical sizing analysis · 2D pose landmarking · fit evaluation</span></li>
         <li><span class="k">Tools</span><span class="v">R · Python · CLO3D · Blender</span></li>
       </ul>
+      </div>
     </div>
   </section>
 
